@@ -148,16 +148,18 @@ class PNGCanvas:
     for y in range(self.height):
       raw_list.append(chr(0)) # filter type 0 (None)
       for x in range(self.width):
-        raw_list.append(struct.pack("!3B",*self.canvas[y][x]))
+        raw_list.append(struct.pack("!4B",*self.canvas[y][x]))
+        #raw_list.append(struct.pack("!3B",*self.canvas[y][x]))
     raw_data = ''.join(raw_list)
 
     # 8-bit image represented as RGB tuples
     # simple transparency, alpha is pure white
     return signature + \
-      self.pack_chunk('IHDR', struct.pack("!2I5B",self.width,self.height,8,2,0,0,0)) + \
+      self.pack_chunk('IHDR', struct.pack("!2I5B",self.width,self.height,8,6,0,0,0)) + \
       self.pack_chunk('tRNS', struct.pack("!6B",0xFF,0xFF,0xFF,0xFF,0xFF,0xFF)) + \
       self.pack_chunk('IDAT', zlib.compress(raw_data,9)) + \
       self.pack_chunk('IEND', '')
+      #self.pack_chunk('IHDR', struct.pack("!2I5B",self.width,self.height,8,6,0,0,0)) + \
 
   def pack_chunk(self,tag,data):
     to_check = tag + data
