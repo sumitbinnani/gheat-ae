@@ -5,4 +5,4 @@ api_version: 1
 
 handlers:
 - url: /.*
-  script: test_tile.py
+  script: app_main.py
