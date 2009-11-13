@@ -36,7 +36,7 @@ class PNGCanvas:
     self.width = width
     self.height = height
     self.color = color #rgba
-    bgcolor = bgcolor[0:3] # we don't need alpha for background
+    bgcolor = bgcolor[0:4] # we don't need alpha for background
     for i in range(height):
       self.canvas.append([bgcolor] * width)
 
